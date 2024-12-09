@@ -8,6 +8,10 @@ export default function Filters({
   onPublisherChange,
   selectedTypes,
   onTypeChange,
+  yearRange,
+  onYearChange,
+  playerRange,
+  onPlayerChange,
 }: FiltersProps) {
   const handlePublisherChange = (publisher: string, checked: boolean) => {
     if (checked) {
@@ -60,11 +64,23 @@ export default function Filters({
       </div>
       <div className='mb-6'>
         <h3 className='font-semibold mb-2'>Publication year</h3>
-        <Range />
+        <Range
+          fromValue={yearRange.from}
+          toValue={yearRange.to}
+          onFromChange={(value) => onYearChange({ ...yearRange, from: value })}
+          onToChange={(value) => onYearChange({ ...yearRange, to: value })}
+        />
       </div>
       <div className='mb-6'>
         <h3 className='font-semibold mb-2'>Players</h3>
-        <Range />
+        <Range
+          fromValue={playerRange.from}
+          toValue={playerRange.to}
+          onFromChange={(value) =>
+            onPlayerChange({ ...playerRange, from: value })
+          }
+          onToChange={(value) => onPlayerChange({ ...playerRange, to: value })}
+        />
       </div>
     </>
   );

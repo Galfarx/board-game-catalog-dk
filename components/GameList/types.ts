@@ -24,4 +24,8 @@
    onPublisherChange: (publishers: string[]) => void;
    selectedTypes: string[];
    onTypeChange: (types: string[]) => void;
+   yearRange: { from: number | null; to: number | null };
+   onYearChange: (range: { from: number | null; to: number | null }) => void;
+   playerRange: { from: number | null; to: number | null };
+   onPlayerChange: (range: { from: number | null; to: number | null }) => void;
  }
