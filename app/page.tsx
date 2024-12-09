@@ -1,101 +1,168 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <>
+    <header className="py-4 border border-gray-200 bg-white sticky top-0">
+        <div className="container mx-auto flex justify-between">
+            <p>
+                Board Game Catalog
+            </p>
+            <div className="flex">
+                <input className="px-2 py-1 border border-black rounded-l-md" placeholder="Game Name" type="text"></input>
+                <button className="px-2 py-1 border-y-black border-r-black border rounded-r-md bg-slate-200 cursor-pointer hover:bg-slate-300">Search</button>
+            </div>
+            <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700">Add game</button>
+            <div className="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                </svg>
+            </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    </header>
+    <div className="container mx-auto flex divide-x h-screen gap-4">
+        <div className="w-1/6">
+            <h2 className="font-bold text-lg my-4">Filters</h2>
+            <div className="flex flex-col mb-6">
+                <h3 className="font-semibold mb-2">Type</h3>
+                <div className="mb-2">
+                    <input type="checkbox" id="baseGame" name="baseGame" value="BaseGame"></input>
+                    <label htmlFor="baseGame">Base Game</label>
+                </div>
+                <div className="mb-2">
+                    <input type="checkbox" id="expansion" name="expansion" value="expansion"></input>
+                    <label htmlFor="expansion">Expansion</label>
+                </div>
+            </div>
+            <div className="flex flex-col mb-6">
+                <h3 className="font-semibold mb-2">Publisher</h3>
+                <div className="mb-2">
+                    <input type="checkbox" id="portal" name="portal" value="portal"></input>
+                    <label htmlFor="portal">Portal</label>
+                </div>
+                <div className="mb-2">
+                    <input type="checkbox" id="rebel" name="rebel" value="rebel"></input>
+                    <label htmlFor="rebel">Rebel</label>
+                </div>
+                <div className="mb-2">
+                    <input type="checkbox" id="lucky" name="lucky" value="lucky"></input>
+                    <label htmlFor="lucky">Lucky</label>
+                </div>
+            </div>
+            <div className="mb-6">
+                <h3 className="font-semibold mb-2">Publication year</h3>
+                <input placeholder="from" className="max-w-24 px-2 py-1 border border-black rounded-md" type="number" /> - <input placeholder="to" className="max-w-24 px-2 py-1 border border-black rounded-md" type="number" />
+            </div>
+            <div className="mb-6">
+                <h3 className="font-semibold mb-2">Players</h3>
+                <input placeholder="from" type="number" className="max-w-24 px-2 py-1 border border-black rounded-md" /> - <input placeholder="to" type="number" className="max-w-24 px-2 py-1 border border-black rounded-md" />
+            </div>
+        </div>
+        <div className="p-4 w-5/6">
+            <div className="flex flex-col w-full gap-4">
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+                <div className="border border-gray-200 p-4 w-full flex justify-between gap-4 divide-x">
+                    <div className="flex flex-col w-4/5">
+                        <div className="flex justify-between w-full mb-2">
+                            <h3 className="font-semibold text-xl">Game 1</h3>
+                            <p className="text-sm italic text-gray-500">Base Game</p>
+                        </div>
+                        <p className="text-gray-500">Publisher: <span className="text-black">Portal</span></p>
+                        <p className="text-gray-500">Publication year: <span className="text-black">2020</span></p>
+                        <p className="text-gray-500">Players: <span className="text-black">2-4</span></p>
+                        <p className="text-gray-500">Expansions: <span className="text-black">Catan</span></p>
+                    </div>
+                    <div className="flex flex-col w-1/5 pl-4">
+                        <button className="px-2 py-1 text-white rounded-md bg-green-600 cursor-pointer hover:bg-green-700 mb-2">Add expansion</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-sky-600 cursor-pointer hover:bg-sky-700 mb-2">Edit</button>
+                        <button className="px-2 py-1 text-white rounded-md bg-red-600 cursor-pointer hover:bg-red-700 mb-2">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    </>
   );
 }
