@@ -1,8 +1,7 @@
-import { getGames } from "@/repositories/games";
 import ListElement from "./ListElement";
+import { GameListProps } from "./types";
 
-export default function GamesList() {
-  const games = getGames();
+export default function GamesList({ games }: { games: GameListProps[] }) {
   return (
     <div className='flex flex-col w-full gap-4'>
       {games.map((game) => {
