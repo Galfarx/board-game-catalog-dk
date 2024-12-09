@@ -11,6 +11,7 @@ export default function SortableGameList({
 }) {
   const [selectedPublishers, setSelectedPublishers] = useState<string[]>([]);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [nameFilter, setNameFilter] = useState<string>("");
   const [yearRange, setYearRange] = useState<{
     from: number | null;
     to: number | null;
@@ -30,21 +31,20 @@ export default function SortableGameList({
     const typeMatch =
       selectedTypes.length === 0 || selectedTypes.includes(game.type);
 
+    const nameMatch =
+      nameFilter === "" ||
+      game.name.toLowerCase().includes(nameFilter.toLowerCase());
+
     const yearMatch =
       (!yearRange.from || game.releaseYear >= yearRange.from) &&
       (!yearRange.to || game.releaseYear <= yearRange.to);
-
-    console.log(
-      game.name,
-      !playerRange.from || game.players.min >= playerRange.from
-    );
 
     const playerMatch =
       (!playerRange.from || game.players.min >= playerRange.from) &&
       (!playerRange.to ||
         (game.players.max ? game.players.max <= playerRange.to : true));
 
-    return publisherMatch && typeMatch && yearMatch && playerMatch;
+    return publisherMatch && typeMatch && nameMatch && yearMatch && playerMatch;
   });
 
   return (
@@ -60,6 +60,8 @@ export default function SortableGameList({
           onYearChange={setYearRange}
           playerRange={playerRange}
           onPlayerChange={setPlayerRange}
+          nameFilter={nameFilter}
+          onNameChange={setNameFilter}
         />
       </div>
       <div className='p-4 w-5/6'>

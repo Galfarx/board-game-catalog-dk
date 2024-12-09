@@ -12,3 +12,8 @@ export interface RangeProps {
     onFromChange: (value: number | null) => void;
     onToChange: (value: number | null) => void;
   }
+
+  export interface SearchProps {
+    value: string;
+    onChange: (value: string) => void;
+  }

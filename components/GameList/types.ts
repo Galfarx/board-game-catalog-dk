@@ -1,5 +1,4 @@
-
- export interface GameListProps {
+export interface GameListProps {
     id: string;
     name: string;
     releaseYear: number;
@@ -28,4 +27,6 @@
    onYearChange: (range: { from: number | null; to: number | null }) => void;
    playerRange: { from: number | null; to: number | null };
    onPlayerChange: (range: { from: number | null; to: number | null }) => void;
+   nameFilter: string;
+   onNameChange: (name: string) => void;
  }

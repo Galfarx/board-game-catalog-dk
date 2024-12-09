@@ -1,3 +1,4 @@
+import Search from "../Inputs/Search";
 import Checkbox from "../Inputs/Checkbox";
 import Range from "../Inputs/Range";
 import { FiltersProps } from "./types";
@@ -12,6 +13,8 @@ export default function Filters({
   onYearChange,
   playerRange,
   onPlayerChange,
+  nameFilter,
+  onNameChange,
 }: FiltersProps) {
   const handlePublisherChange = (publisher: string, checked: boolean) => {
     if (checked) {
@@ -32,7 +35,8 @@ export default function Filters({
   return (
     <>
       <h2 className='font-bold text-lg my-4'>Filters</h2>
-      <div className='flex flex-col mb-6'>
+      <Search value={nameFilter} onChange={onNameChange} />
+      <div className='flex flex-col mb-6 mt-6'>
         <h3 className='font-semibold mb-2'>Type</h3>
         <Checkbox
           id='BaseGame'
