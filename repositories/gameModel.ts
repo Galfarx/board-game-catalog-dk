@@ -1,9 +1,5 @@
-export interface ListElementEntryProps {
-    entry: string;
-    value: string
- }
-
- export interface ListElementProps {
+export default interface Game {
+    id: string;
     name: string;
     releaseYear: number;
     players: { min: number; max?: number };
@@ -12,4 +8,4 @@ export interface ListElementEntryProps {
     baseGame?: string;
     standalone?: boolean;
     type: "BaseGame" | "Expansion";
- }
+}
