@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import MainHeader from "@/components/MainHeader";
 
 export const metadata: Metadata = {
   title: "Board Game Catalog",
@@ -12,10 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={"antialiased"}
-      >
+    <html lang='en'>
+      <body className={"antialiased"}>
+        <MainHeader />
         {children}
       </body>
     </html>
