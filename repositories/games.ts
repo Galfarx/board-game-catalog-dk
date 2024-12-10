@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, where, deleteDoc } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import Game from './gameModel';
 
@@ -39,4 +39,9 @@ export async function getExpansions(baseGameId: string): Promise<Game[]> {
   } as Game));
 
   return expansions;
+}
+
+export async function deleteGame(id: string) {
+  const gameRef = doc(db, "games", id);
+  await deleteDoc(gameRef);
 }
