@@ -1,11 +1,15 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { collection, query, where, getDocs } from "firebase/firestore";
+import { db } from "@/firebase/config";
 import { AddGameProps } from "@/components/Forms/AddGame.types";
 import Button from "@/components/Buttons/Regular/Button";
 import { ButtonType } from "@/components/Buttons/Regular/types";
 import Checkbox from "@/components/Inputs/Checkbox";
+import Game from "@/repositories/gameModel";
 
 export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
+  const [baseGames, setBaseGames] = useState<Game[]>([]);
   const [formData, setFormData] = useState({
     name: "",
     releaseYear: "",
@@ -15,15 +19,35 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
       min: "",
       max: "",
     },
-    baseGame: true,
+    baseGame: "",
     standalone: false,
   });
+
+  useEffect(() => {
+    const fetchBaseGames = async () => {
+      if (formData.type === "Expansion") {
+        const gamesRef = collection(db, "games");
+        const q = query(gamesRef, where("type", "==", "BaseGame"));
+        const snapshot = await getDocs(q);
+        const games = snapshot.docs.map(
+          (doc) =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            } as Game)
+        );
+        setBaseGames(games);
+      }
+    };
+
+    fetchBaseGames();
+  }, [formData.type]);
 
   const handleTypeChange = (type: string) => {
     setFormData({
       ...formData,
       type,
-      baseGame: type === "BaseGame",
+      baseGame: type === "BaseGame" ? "" : formData.baseGame,
       standalone: type === "BaseGame" ? false : formData.standalone,
     });
   };
@@ -82,20 +106,44 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
       </div>
 
       {formData.type === "Expansion" && (
-        <div>
-          <Checkbox
-            id='standalone'
-            value='standalone'
-            label='Can be played standalone'
-            checked={formData.standalone}
-            onChange={(e) =>
-              setFormData({
-                ...formData,
-                standalone: e.target.checked,
-              })
-            }
-          />
-        </div>
+        <>
+          <div>
+            <label className='block text-sm font-medium mb-1'>Base Game</label>
+            <select
+              className='w-full px-3 py-2 border rounded-md'
+              value={formData.baseGame}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  baseGame: e.target.value,
+                })
+              }
+              required
+            >
+              <option value=''>Select base game</option>
+              {baseGames.map((game) => (
+                <option key={game.id} value={game.id}>
+                  {game.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <Checkbox
+              id='standalone'
+              value='standalone'
+              label='Can be played standalone'
+              checked={formData.standalone}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  standalone: e.target.checked,
+                })
+              }
+            />
+          </div>
+        </>
       )}
 
       <div className='flex gap-4'>
