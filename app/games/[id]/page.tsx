@@ -1,4 +1,6 @@
 import { getGame } from "@/repositories/games";
+import { getExpansions } from "@/repositories/games";
+import GamesList from "@/components/GameList/GamesList";
 
 export default async function GamePage({ params }: { params: { id: string } }) {
   const game = await getGame(params.id);
@@ -6,6 +8,10 @@ export default async function GamePage({ params }: { params: { id: string } }) {
   if (!game) {
     return <div>Game not found</div>;
   }
+
+  // Fetch expansions only if this is a base game
+  const expansions =
+    game.type === "BaseGame" ? await getExpansions(game.id) : [];
 
   return (
     <div className='container mx-auto p-4'>
@@ -15,7 +21,6 @@ export default async function GamePage({ params }: { params: { id: string } }) {
         <div>
           <h2 className='text-xl font-semibold mb-2'>Details</h2>
           <ul className='space-y-2'>
-            <li>Type: {game.type}</li>
             <li>Publisher: {game.publisher}</li>
             <li>Release Year: {game.releaseYear}</li>
             <li>
@@ -29,6 +34,13 @@ export default async function GamePage({ params }: { params: { id: string } }) {
           </ul>
         </div>
       </div>
+
+      {game.type === "BaseGame" && expansions.length > 0 && (
+        <div className='mt-8'>
+          <h2 className='text-2xl font-semibold mb-4'>Expansions</h2>
+          <GamesList games={expansions} />
+        </div>
+      )}
     </div>
   );
 }

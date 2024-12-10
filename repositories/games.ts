@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc, query, where } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import Game from './gameModel';
 
@@ -26,4 +26,17 @@ export async function getGame(id: string) {
   }
 
   return null;
+}
+
+export async function getExpansions(baseGameId: string): Promise<Game[]> {
+  const gamesRef = collection(db, "games");
+  const q = query(gamesRef, where("baseGame", "==", baseGameId));
+  const snapshot = await getDocs(q);
+
+  const expansions = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  } as Game));
+
+  return expansions;
 }
