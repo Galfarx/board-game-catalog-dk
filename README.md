@@ -17,6 +17,7 @@ The project is built with the Next.js framework, using TypeScript and TailwindCS
 - **Add advanced form validations**
 - **Implement user-friendly error handling**
 - **Add unit tests**
+- **Improve state management in SortableGameList** right now it is implemented simply by using useState but this can grow quickly. Altertaive implementations could be done by using useReducer or extracting this logic to dedicated Filtering Context.
 
 ## Known Bugs
 
