@@ -1,4 +1,4 @@
-export interface GameFormProps {
-    onSubmit: (data: any) => void;
+export interface AddGameProps {
+    onSubmit: () => void;
     onCancel: () => void;
 }

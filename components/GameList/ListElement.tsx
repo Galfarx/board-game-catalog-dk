@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import Button from "../Buttons/Regular/Button";
 import { ButtonType } from "../Buttons/Regular/types";
 import ListElementEntry from "./ListElementEntry";
-import { ListElementProps } from "./types";
+import { GameListProps } from "./types";
 import Link from "next/link";
 import { deleteGame } from "@/repositories/games";
 
@@ -16,7 +16,7 @@ export default function ListElement({
   expansions,
   standalone,
   type,
-}: ListElementProps) {
+}: GameListProps) {
   const router = useRouter();
 
   const handleDelete = async () => {

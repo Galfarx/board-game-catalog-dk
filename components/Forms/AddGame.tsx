@@ -13,7 +13,7 @@ import {
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "@/firebase/config";
-import { AddGameProps } from "@/components/Forms/AddGame.types";
+import { AddGameProps } from "./types";
 import Button from "@/components/Buttons/Regular/Button";
 import { ButtonType } from "@/components/Buttons/Regular/types";
 import Checkbox from "@/components/Inputs/Checkbox";
@@ -112,7 +112,7 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
         }
       }
 
-      onSubmit({ id: newGameId, ...gameData });
+      onSubmit();
       router.refresh();
     } catch (error) {
       console.error("Error adding game:", error);

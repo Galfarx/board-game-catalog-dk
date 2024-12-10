@@ -10,8 +10,6 @@ export interface GameListProps {
     type: "BaseGame" | "Expansion";
  }
 
- export interface ListElementProps extends GameListProps {};
-
  export interface ListElementEntryProps {
     entry: string;
     value: string

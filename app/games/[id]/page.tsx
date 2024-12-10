@@ -1,9 +1,11 @@
+import { GamePageProps } from "./types";
 import { getGame } from "@/repositories/games";
 import { getExpansions } from "@/repositories/games";
 import GamesList from "@/components/GameList/GamesList";
 
-export default async function GamePage({ params }: { params: { id: string } }) {
-  const game = await getGame(params.id);
+export default async function GamePage({ params }: { params: GamePageProps }) {
+  const { id } = await params;
+  const game = await getGame(id);
 
   if (!game) {
     return <div>Game not found</div>;
