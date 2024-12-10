@@ -10,7 +10,7 @@ export interface GameListProps {
     type: "BaseGame" | "Expansion";
  }
 
- export type ListElementProps = Omit<GameListProps, "id">;
+ export interface ListElementProps extends GameListProps {};
 
  export interface ListElementEntryProps {
     entry: string;

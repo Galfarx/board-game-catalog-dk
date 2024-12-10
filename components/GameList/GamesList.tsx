@@ -18,6 +18,7 @@ export default function GamesList({ games }: { games: GameListProps[] }) {
         return (
           <ListElement
             key={id}
+            id={id}
             name={name}
             releaseYear={releaseYear}
             players={players}

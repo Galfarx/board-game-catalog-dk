@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '@/firebase/config';
 import Game from './gameModel';
 
@@ -12,4 +12,18 @@ export async function getGames(): Promise<Game[]> {
     } as Game;
   });
   return gamesList;
+}
+
+export async function getGame(id: string) {
+  const docRef = doc(db, "games", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return {
+      id: docSnap.id,
+      ...docSnap.data(),
+    } as Game;
+  }
+
+  return null;
 }
