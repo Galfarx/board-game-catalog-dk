@@ -9,9 +9,7 @@ import AddGame from "./Forms/AddGame";
 export default function MainHeader() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleAddGame = (gameData: any) => {
-    // TODO: Implement adding game to Firestore
-    console.log("New game data:", gameData);
+  const handleAddGame = () => {
     setIsModalOpen(false);
   };
 

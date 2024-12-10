@@ -1,6 +1,17 @@
 "use client";
 import { useState, useEffect } from "react";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  addDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
+import { useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import { db } from "@/firebase/config";
 import { AddGameProps } from "@/components/Forms/AddGame.types";
 import Button from "@/components/Buttons/Regular/Button";
@@ -9,8 +20,11 @@ import Checkbox from "@/components/Inputs/Checkbox";
 import Game from "@/repositories/gameModel";
 
 export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
+  const router = useRouter();
   const [baseGames, setBaseGames] = useState<Game[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
+    id: uuidv4(),
     name: "",
     releaseYear: "",
     publisher: "",
@@ -52,9 +66,59 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit(formData);
+    setIsSubmitting(true);
+
+    try {
+      const gameData = {
+        id: formData.id,
+        name: formData.name,
+        releaseYear: Number(formData.releaseYear),
+        publisher: formData.publisher,
+        type: formData.type as "BaseGame" | "Expansion",
+        players: {
+          min: Number(formData.players.min),
+          max: Number(formData.players.max),
+        },
+        ...(formData.type === "Expansion" && {
+          baseGame: formData.baseGame,
+          standalone: formData.standalone,
+        }),
+        ...(formData.type === "BaseGame" && {
+          expansions: [],
+        }),
+      };
+
+      const gamesRef = collection(db, "games");
+      const docRef = await addDoc(gamesRef, gameData);
+      const newGameId = docRef.id;
+
+      if (formData.type === "Expansion" && formData.baseGame) {
+        try {
+          const baseGameRef = doc(db, "games", formData.baseGame);
+          const baseGameSnap = await getDoc(baseGameRef);
+
+          if (baseGameSnap.exists()) {
+            const baseGameData = baseGameSnap.data();
+            const currentExpansions = baseGameData.expansions || [];
+
+            await updateDoc(baseGameRef, {
+              expansions: [...currentExpansions, newGameId],
+            });
+          }
+        } catch (error) {
+          console.error("Error updating base game:", error);
+        }
+      }
+
+      onSubmit({ id: newGameId, ...gameData });
+      router.refresh();
+    } catch (error) {
+      console.error("Error adding game:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -182,7 +246,9 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
         <Button type={ButtonType.Delete} onClick={onCancel}>
           Cancel
         </Button>
-        <Button type={ButtonType.Add}>Add Game</Button>
+        <Button type={ButtonType.Add} disabled={isSubmitting}>
+          {isSubmitting ? "Adding..." : "Add Game"}
+        </Button>
       </div>
     </form>
   );
