@@ -3,6 +3,7 @@ import { useState } from "react";
 import { AddGameProps } from "@/components/Forms/AddGame.types";
 import Button from "@/components/Buttons/Regular/Button";
 import { ButtonType } from "@/components/Buttons/Regular/types";
+import Checkbox from "@/components/Inputs/Checkbox";
 
 export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
   const [formData, setFormData] = useState({
@@ -14,7 +15,18 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
       min: "",
       max: "",
     },
+    baseGame: true,
+    standalone: false,
   });
+
+  const handleTypeChange = (type: string) => {
+    setFormData({
+      ...formData,
+      type,
+      baseGame: type === "BaseGame",
+      standalone: type === "BaseGame" ? false : formData.standalone,
+    });
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,12 +74,30 @@ export default function AddGame({ onSubmit, onCancel }: AddGameProps) {
         <select
           className='w-full px-3 py-2 border rounded-md'
           value={formData.type}
-          onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+          onChange={(e) => handleTypeChange(e.target.value)}
         >
           <option value='BaseGame'>Base Game</option>
           <option value='Expansion'>Expansion</option>
         </select>
       </div>
+
+      {formData.type === "Expansion" && (
+        <div>
+          <Checkbox
+            id='standalone'
+            value='standalone'
+            label='Can be played standalone'
+            checked={formData.standalone}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                standalone: e.target.checked,
+              })
+            }
+          />
+        </div>
+      )}
+
       <div className='flex gap-4'>
         <div className='flex-1'>
           <label className='block text-sm font-medium mb-1'>Min Players</label>
