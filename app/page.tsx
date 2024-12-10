@@ -1,8 +1,7 @@
 import SortableGameList from "@/components/GameList/SortableGameList";
 import { getGames } from "@/repositories/games";
 
-export default function Home() {
-  const games = getGames();
-
+export default async function Home() {
+  const games = await getGames();
   return <SortableGameList games={games} />;
 }
